@@ -1,0 +1,2 @@
+- Start editing your MOTD using `/motdgg editor`
+- Apply changes using `/motdgg apply <id|url>`

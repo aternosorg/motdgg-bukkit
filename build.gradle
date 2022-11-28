@@ -1,0 +1,60 @@
+plugins {
+    id 'java'
+    id "com.modrinth.minotaur" version "2.+"
+}
+
+version = project.hasProperty('release') ? project.getProperty('release') : 'dev'
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    mavenLocal()
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT'
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("plugin.yml") {
+        expand "version": project.version
+    }
+}
+
+modrinth {
+    token = System.getenv("MODRINTH_TOKEN")
+    projectId = "" // TODO: add real project ID
+    uploadFile = "./build/libs/motdgg-bukkit-${project.version}.jar"
+    gameVersions = [
+            "1.19.2",
+            "1.19.1",
+            "1.19",
+            "1.18.2",
+            "1.18.1",
+            "1.18",
+            "1.17.1",
+            "1.17",
+            "1.16.5",
+            "1.16.4",
+            "1.16.3",
+            "1.16.2",
+            "1.16.1",
+            "1.16",
+            "1.15.2",
+            "1.15.1",
+            "1.15",
+            "1.14.4",
+            "1.14.3",
+            "1.14.2",
+            "1.14.1",
+            "1.14",
+            "1.13.2",
+            "1.13.1",
+            "1.13",
+            // TODO: check compatibility with pre-1.13
+    ]
+    loaders = ["spigot", "paper", "purpur"]
+    changelog = rootProject.file("CHANGELOG.md").text
+}

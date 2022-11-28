@@ -1,0 +1,32 @@
+name: Release
+on:
+  push:
+    tags:
+      - '*.*.*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 8
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: init submodule
+        run: git submodule init && git submodule update
+      - name: Build with Gradle
+        run: ./gradlew shadowJar -Prelease=${{  github.ref_name }}
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ./build/libs/motdgg-bukkit-${{  github.ref_name }}.jar
+          body_path: ${{ github.workspace }}/CHANGELOG.md
+          name: v${{ github.ref_name }}
+      - name: Publish to Modrinth
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: ./gradlew modrinth -Prelease=${{  github.ref_name }}

@@ -1,0 +1,20 @@
+name: motd.gg
+version: $version
+description: Easily edit your MOTD and apply changes without restarting your server
+author: Aternos GmbH
+website: https://motd.gg
+
+main: gg.motd.bukkit.MOTDGGPlugin
+api-version: 1.13
+
+commands:
+  motdgg:
+    description: Save your current MOTD to motd.gg or apply changes without restarting the sever.
+    usage: "/motdgg <editor|apply> <id|url>"
+    aliases: motd
+    permission: motdgg
+
+permissions:
+  motdgg:
+    description: Save your current MOTD to motd.gg or apply changes without restarting the sever.
+    default: op
