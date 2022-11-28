@@ -4,12 +4,15 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 
-public class MOTDCommand implements CommandExecutor {
+public class MOTDCommand implements CommandExecutor, TabExecutor {
     protected final MOTDGGPlugin plugin;
 
     public final HashMap<String, CommandExecutor> subCommands = new HashMap<>();
@@ -21,7 +24,7 @@ public class MOTDCommand implements CommandExecutor {
 
     private void registerSubCommands() {
         this.subCommands.put("editor", new MOTDEditorCommand(this));
-        this.subCommands.put("apply", new MOTDEditorCommand(this));
+        this.subCommands.put("apply", new MOTDApplyCommand(this));
     }
 
     @Override
@@ -31,7 +34,7 @@ public class MOTDCommand implements CommandExecutor {
             return true;
         }
 
-        CommandExecutor subCommand = subCommands.get(args[0]);
+        CommandExecutor subCommand = args.length == 0 ? null : subCommands.get(args[0]);
         if (subCommand == null) {
             return false;
         }
@@ -51,5 +54,14 @@ public class MOTDCommand implements CommandExecutor {
 
     public MOTDGGPlugin getPlugin() {
         return plugin;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length == 0) {
+            return new ArrayList<>(subCommands.keySet());
+        }
+
+        return new ArrayList<>();
     }
 }
