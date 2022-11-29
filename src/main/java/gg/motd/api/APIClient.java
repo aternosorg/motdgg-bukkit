@@ -62,7 +62,7 @@ public class APIClient {
     }
 
     public MOTD getMotd(String id) throws IOException {
-        String response = this.request(id + ".json", "GET", "");
+        String response = this.request(id + ".json");
         return new Gson().fromJson(response, MOTD.class);
     }
 }

@@ -7,6 +7,7 @@ import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,14 +16,14 @@ import java.util.Base64;
 import java.util.logging.Level;
 
 public class MOTDEditorCommand implements CommandExecutor {
-    protected MOTDCommand parent;
+    protected final MOTDCommand parent;
 
     public MOTDEditorCommand(MOTDCommand parent) {
         this.parent = parent;
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
         String serverIcon = null;
         try {
             serverIcon = "data:image\\/png;base64," + Base64.getEncoder()

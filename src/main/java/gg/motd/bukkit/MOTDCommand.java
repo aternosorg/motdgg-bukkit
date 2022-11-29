@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +30,7 @@ public class MOTDCommand implements CommandExecutor, TabExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+    public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
         if (!sender.hasPermission("motdgg")) {
             sender.sendMessage(ChatColor.RED + "You don't have the permissions required to execute this command.");
             return true;
@@ -40,7 +41,7 @@ public class MOTDCommand implements CommandExecutor, TabExecutor {
             return false;
         }
 
-        return subCommand.onCommand(sender, command, s, Arrays.copyOfRange(args, 1, args.length));
+        return subCommand.onCommand(sender, command, alias, Arrays.copyOfRange(args, 1, args.length));
     }
 
     /**

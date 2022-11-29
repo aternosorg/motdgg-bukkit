@@ -5,7 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 
 public class ServerListPingEventHandler implements Listener {
-    protected MOTDGGPlugin plugin;
+    protected final MOTDGGPlugin plugin;
 
     ServerListPingEventHandler(MOTDGGPlugin plugin) {
         this.plugin = plugin;

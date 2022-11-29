@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -21,14 +22,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MOTDApplyCommand implements CommandExecutor {
-    protected MOTDCommand parent;
+    protected final MOTDCommand parent;
 
     public MOTDApplyCommand(MOTDCommand parent) {
         this.parent = parent;
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length == 0) {
             return false;
         }
