@@ -26,7 +26,7 @@ processResources {
 
 modrinth {
     token = System.getenv("MODRINTH_TOKEN")
-    projectId = "" // TODO: add real project ID
+    projectId = "VPo0otUH"
     uploadFile = "./build/libs/motdgg-bukkit-${project.version}.jar"
     gameVersions = [
             "1.19.2",
@@ -54,7 +54,27 @@ modrinth {
             "1.13.2",
             "1.13.1",
             "1.13",
-            // TODO: check compatibility with pre-1.13
+            "1.12.2",
+            "1.12.1",
+            "1.12",
+            "1.11.2",
+            "1.11.1",
+            "1.11",
+            "1.10.2",
+            "1.10.1",
+            "1.10",
+            "1.9.4",
+            "1.9.3",
+            "1.9.2",
+            "1.9.1",
+            "1.9",
+            "1.8.9",
+            "1.8.8",
+            "1.8.7",
+            "1.8.6",
+            "1.8.5",
+            "1.8.4",
+            "1.8.3",
     ]
     loaders = ["spigot", "paper", "purpur"]
     changelog = rootProject.file("CHANGELOG.md").text
