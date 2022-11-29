@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 public class MOTDCommand implements CommandExecutor, TabExecutor {
     protected final MOTDGGPlugin plugin;
@@ -57,9 +58,12 @@ public class MOTDCommand implements CommandExecutor, TabExecutor {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 0) {
-            return new ArrayList<>(subCommands.keySet());
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias, String[] args) {
+        if (args.length == 1) {
+            return subCommands.keySet()
+                    .stream()
+                    .filter(arg -> arg.contains(args[0]))
+                    .collect(Collectors.toList());
         }
 
         return new ArrayList<>();
