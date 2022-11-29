@@ -10,6 +10,6 @@ The MOTD and server icon change instantly without a server restart.
 
 ### Downloads
 - [GitHub Releases](https://github.com/aternosorg/motdgg-bukkit/releases)
-- [Spigotmc](https://www.spigotmc.org/resources/motd-gg.47502/)
+- [Spigotmc](https://www.spigotmc.org/resources/motd-gg.106501/)
 - [CurseForge/DevBukkit](https://www.curseforge.com/minecraft/bukkit-plugins/motd-gg)
 - [Modrinth](https://modrinth.com/plugin/motdgg)
