@@ -1,4 +1,4 @@
-name: motd.gg
+name: motdgg
 version: $version
 description: Easily edit your MOTD and apply changes without restarting your server
 author: Aternos GmbH
