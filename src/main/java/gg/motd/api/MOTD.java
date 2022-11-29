@@ -2,14 +2,7 @@ package gg.motd.api;
 
 import com.google.gson.Gson;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.stream.Collectors;
 
 public class MOTD {
     protected String session = null;
@@ -54,7 +47,7 @@ public class MOTD {
         return this;
     }
 
-    public Object getFavicon() {
+    public String getFavicon() {
         return favicon;
     }
 
