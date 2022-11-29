@@ -1,6 +1,5 @@
 package gg.motd.bukkit;
 
-import gg.motd.api.APIClient;
 import gg.motd.api.MOTD;
 import gg.motd.api.SaveResponse;
 import org.bukkit.ChatColor;
@@ -9,7 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import java.io.*;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Base64;
@@ -35,7 +34,6 @@ public class MOTDEditorCommand implements CommandExecutor {
 
         Server server = sender.getServer();
         MOTD motd = new MOTD()
-                .setName(server.getName() + " " + server.getVersion() + " " + server.getBukkitVersion())
                 .setText(server.getMotd())
                 .setFavicon(serverIcon);
 
