@@ -15,6 +15,6 @@ and apply your new MOTD without restarting the server.
 Save your current MOTD to motd.gg and generate a link to edit it.
 
 ```
-/motdgg save <id|url>
+/motdgg apply <id|url>
 ```
 Apply this MOTD to your server without restarting your server.
