@@ -16,10 +16,12 @@ jobs:
               run: git submodule init && git submodule update
             - name: Set outputs
               id: vars
-              run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> GITHUB_ENV
+              run: |
+                  calculatedSha=$(git rev-parse --short ${{ github.sha }})
+                  echo "::set-output name=short_sha::$calculatedSha"
             - name: Build with Gradle
-              run: ./gradlew build -Prelease=dev-${COMMIT_HASH}
+              run: ./gradlew build -Prelease=dev-${{ steps.vars.outputs.short_sha }}
             - uses: actions/upload-artifact@v3
               with:
-                  name: motdgg-bukkit-dev-${{  github.ref_name }}
-                  path: ./build/libs/motdgg-bukkit-dev-${COMMIT_HASH}.jar
+                  name: motdgg-bukkit-dev-${{ steps.vars.outputs.short_sha }}
+                  path: ./build/libs/motdgg-bukkit-dev-${{ steps.vars.outputs.short_sha }}.jar
