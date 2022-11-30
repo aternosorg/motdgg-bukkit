@@ -34,14 +34,16 @@ public class MOTDEditorCommand implements CommandExecutor {
         }
 
         Server server = sender.getServer();
-        MOTD motd = new MOTD()
-                .setText(server.getMotd())
-                .setFavicon(serverIcon);
+        if (parent.plugin.motd == null) {
+            parent.plugin.motd = new MOTD()
+                    .setText(server.getMotd())
+                    .setFavicon(serverIcon);
+        }
 
         boolean success;
         try {
-            SaveResponse response = motd.save(parent.plugin.getClient());
-            motd = response.getMotd();
+            SaveResponse response = parent.plugin.motd.save(parent.plugin.getClient());
+            parent.plugin.motd = response.getMotd();
             success = response.isSuccess();
         } catch (IOException e) {
             sender.sendMessage(ChatColor.RED + "Failed to save the MOTD to the motd.gg API. Check your log for details.");
@@ -49,14 +51,14 @@ public class MOTDEditorCommand implements CommandExecutor {
             return true;
         }
 
-        if (!success || motd == null) {
+        if (!success || parent.plugin.motd == null) {
             sender.sendMessage(ChatColor.RED + "Failed to save the MOTD to the motd.gg API.");
             parent.log(Level.SEVERE, "Failed to save the MOTD to the motd.gg API.");
             return true;
         }
 
         sender.sendMessage(ChatColor.GREEN + "Edit your MOTD here: " + ChatColor.AQUA +
-                "https://motd.gg/" + motd.getId() + "?s=" + motd.getSession());
+                "https://motd.gg/" + parent.plugin.motd.getId() + "?s=" + parent.plugin.motd.getSession());
         return true;
     }
 }

@@ -10,7 +10,7 @@ api-version: 1.13
 commands:
   motdgg:
     description: Save your current MOTD to motd.gg or apply changes without restarting the sever.
-    usage: "/motdgg <editor|apply> <id|url>"
+    usage: "/motdgg editor|apply [<id|url>]"
     aliases: motd
     permission: motdgg
 

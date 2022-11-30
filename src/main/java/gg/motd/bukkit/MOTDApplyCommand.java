@@ -1,6 +1,5 @@
 package gg.motd.bukkit;
 
-import gg.motd.api.MOTD;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -30,19 +29,26 @@ public class MOTDApplyCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        String id;
+        String session = null;
         if (args.length == 0) {
-            return false;
+            id = parent.plugin.motd.getId();
+            session = parent.plugin.motd.getSession();
+        }
+        else {
+            Matcher matcher = Pattern.compile("(?:https?://motd\\.gg/)?([a-zA-Z0-9]+)(?:\\..*)?")
+                    .matcher(args[0]);
+            if (!matcher.matches()) {
+                sender.sendMessage(ChatColor.RED + "No motd id specified. Use /motdgg apply <url|id>");
+                return true;
+            }
+
+            id = matcher.group(1);
         }
 
-        Matcher matcher = Pattern.compile("(?:https?://motd\\.gg/)?([a-zA-Z0-9]+)(?:\\..*)?")
-                .matcher(args[0]);
-        if (!matcher.matches()) {
-            return false;
-        }
-
-        MOTD motd;
         try {
-            motd = parent.getPlugin().getClient().getMotd(matcher.group(1));
+            parent.plugin.motd = parent.getPlugin().getClient().getMotd(id);
+            parent.plugin.motd.setSession(session);
         } catch (IOException e) {
             sender.sendMessage(ChatColor.RED + "Failed to fetch the MOTD from the motd.gg API. Check your log for details.");
             parent.plugin.getLogger().log(Level.SEVERE, "Failed to fetch the MOTD from the motd.gg API: ", e);
@@ -50,7 +56,6 @@ public class MOTDApplyCommand implements CommandExecutor {
         }
 
         // set live MOTD
-        this.parent.plugin.motd = motd.getText();
         sender.sendMessage(ChatColor.GREEN + "Applied new MOTD.");
 
         // write MOTD to server.properties
@@ -58,7 +63,7 @@ public class MOTDApplyCommand implements CommandExecutor {
             Path propertiesPath = Paths.get("server.properties");
             Properties properties = new Properties();
             properties.load(Files.newInputStream(propertiesPath));
-            properties.setProperty("motd", motd.getText());
+            properties.setProperty("motd", parent.plugin.motd.getText());
             properties.store(Files.newOutputStream(propertiesPath), null);
             sender.sendMessage(ChatColor.GREEN + "Saved new MOTD in the server.properties.");
         }
@@ -68,9 +73,9 @@ public class MOTDApplyCommand implements CommandExecutor {
         }
 
         // write server icon to server-icon.png
-        if (motd.getFavicon() != null) {
+        if (parent.plugin.motd.getFavicon() != null) {
             try {
-                String b64 = motd.getFavicon().split(",")[1];
+                String b64 = parent.plugin.motd.getFavicon().split(",")[1];
                 byte[] imageByte = Base64.getDecoder().decode(b64);
                 ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
                 BufferedImage image = ImageIO.read(bis);

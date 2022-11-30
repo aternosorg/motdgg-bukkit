@@ -14,8 +14,8 @@ public class ServerListPingEventHandler implements Listener {
 
     @EventHandler
     public void handleServerPing(ServerListPingEvent event) {
-        if (this.plugin.motd != null) {
-            event.setMotd(this.plugin.motd);
+        if (this.plugin.motd != null && this.plugin.motd.getText() != null) {
+            event.setMotd(this.plugin.motd.getText());
         }
         if (this.plugin.icon != null) {
             event.setServerIcon(plugin.icon);
