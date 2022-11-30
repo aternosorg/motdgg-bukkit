@@ -15,4 +15,8 @@ jobs:
     - name: init submodule
       run: git submodule init && git submodule update
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew build -Prelease=dev-${{ github.ref_name }}
+    - uses: actions/upload-artifact@v3
+      with:
+        name: motdgg-bukkit-dev-${{  github.ref_name }}
+        path: ./build/libs/motdgg-bukkit-dev-${{ github.ref_name }}.jar
