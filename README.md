@@ -1,4 +1,5 @@
-### motd.gg Bukkit Plugin
+![Logo](./img/logo.png)
+
 Quickly upload your current MOTD and server icon to [motd.gg](https://motd.gg) to edit or share them.
 ![Open the editor](img/open-editor.gif)
 
