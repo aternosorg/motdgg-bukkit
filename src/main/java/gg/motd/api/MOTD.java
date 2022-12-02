@@ -60,4 +60,12 @@ public class MOTD {
         String response = client.request("api/save.php", "POST", new Gson().toJson(this));
         return new Gson().fromJson(response, SaveResponse.class);
     }
+
+    public String getUrl() {
+        return "https://motd.gg/" + this.getId();
+    }
+
+    public String getSessionUrL() {
+        return "https://motd.gg/" + this.getId() + "?s=" + this.getSession();
+    }
 }

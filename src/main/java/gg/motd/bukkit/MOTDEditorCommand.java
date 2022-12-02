@@ -2,11 +2,14 @@ package gg.motd.bukkit;
 
 import gg.motd.api.MOTD;
 import gg.motd.api.SaveResponse;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -57,8 +60,24 @@ public class MOTDEditorCommand implements CommandExecutor {
             return true;
         }
 
-        sender.sendMessage(ChatColor.GREEN + "Edit your MOTD here: " + ChatColor.AQUA +
-                "https://motd.gg/" + parent.plugin.motd.getId() + "?s=" + parent.plugin.motd.getSession());
+        if (sender instanceof ConsoleCommandSender || !parent.plugin.hasSpigotMethod()) {
+            sender.sendMessage(ChatColor.GREEN + "Edit your MOTD here: " + ChatColor.AQUA +
+                    parent.plugin.motd.getSessionUrL());
+        }
+        else {
+            TextComponent message = new TextComponent();
+            message.setText("Edit your MOTD here: ");
+            message.setColor(ChatColor.GREEN.asBungee());
+
+            TextComponent link = new TextComponent();
+            link.setColor(ChatColor.AQUA.asBungee());
+            link.setText(parent.plugin.motd.getUrl());
+            link.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, parent.plugin.motd.getSessionUrL()));
+            message.addExtra(link);
+
+            sender.spigot().sendMessage(message);
+        }
+
         return true;
     }
 }

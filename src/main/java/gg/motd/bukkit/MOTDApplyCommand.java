@@ -47,6 +47,7 @@ public class MOTDApplyCommand implements CommandExecutor {
         }
 
         try {
+            // set live MOTD
             parent.plugin.motd = parent.getPlugin().getClient().getMotd(id);
             parent.plugin.motd.setSession(session);
         } catch (IOException e) {
@@ -55,9 +56,7 @@ public class MOTDApplyCommand implements CommandExecutor {
             return true;
         }
 
-        // set live MOTD
-        sender.sendMessage(ChatColor.GREEN + "Applied new MOTD.");
-
+        boolean success = true;
         // write MOTD to server.properties
         try {
             Path propertiesPath = Paths.get("server.properties");
@@ -70,6 +69,7 @@ public class MOTDApplyCommand implements CommandExecutor {
         catch (IOException e) {
             sender.sendMessage(ChatColor.RED + "Failed to write server.properties. Check your log for details.");
             parent.plugin.getLogger().log(Level.SEVERE, "Failed to write server.properties: ", e);
+            success = false;
         }
 
         // write server icon to server-icon.png
@@ -93,12 +93,19 @@ public class MOTDApplyCommand implements CommandExecutor {
                 catch (Exception e) {
                     sender.sendMessage(ChatColor.RED + "Failed to load server icon. You will have to restart your server to apply the change. Check your log for details.");
                     parent.plugin.getLogger().log(Level.SEVERE, "Failed to load server icon: ", e);
+                    success = false;
                 }
             } catch (IOException e) {
                 sender.sendMessage(ChatColor.RED + "Failed to write server-icon.png. Check your log for details.");
                 parent.plugin.getLogger().log(Level.SEVERE, "Failed to write server-icon.png: ", e);
+                success = false;
             }
         }
+
+        if (success) {
+            sender.sendMessage(ChatColor.GREEN + "Applied new MOTD and server icon.");
+        }
+
         return true;
     }
 }
