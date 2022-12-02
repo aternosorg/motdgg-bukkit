@@ -12,9 +12,9 @@
     <a href="https://modrinth.com/plugin/motdgg" target="_blank"><strong>Download on modrinth »</strong></a>
     <br />
     <br />
-    <a href="https://www.spigotmc.org/resources/motd-gg.106501" target="_blank">Spigot</a>
+    <a href="https://www.spigotmc.org/resources/motd-gg.106501" target="_blank">SpigotMC</a>
     ·
-    <a href="https://www.curseforge.com/minecraft/bukkit-plugins/motd-gg" target="_blank">Curseforge</a>
+    <a href="https://www.curseforge.com/minecraft/bukkit-plugins/motd-gg" target="_blank">CurseForge</a>
   </p>
 </div>
 
