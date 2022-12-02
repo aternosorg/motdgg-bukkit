@@ -22,25 +22,18 @@
 ## About motd.gg
 
 <a href="https://motd.gg">motd.gg</a> allows you to quickly and intuitively create a MOTD for your Minecraft Java server. Features like our in-game preview allow you to see your newly created MOTD directly in your Minecraft server list, so you can always create the best MOTD for you and your players.
-<br />
-<br />
 
 ## Plugin features
-<hr>
-<br />
 
-### Edit your current motd via motd.gg
-<br />
+**Edit your current motd via motd.gg**
+
 <img src="img/open-editor.gif" alt="Logo" width="500">
-<br />
-<br />
 
-### Apply your new MOTD and server icon
-<br />
+**Apply your new MOTD and server icon**
+
 <img src="img/apply-changes.gif" alt="Logo" width="500">
-<br />
-<br />
 
-### The motd changes instantly without a server restart
-<br />
+
+**The motd changes instantly without a server restart**
+
 <img src="img/apply-instant.gif" alt="Logo" width="500">
