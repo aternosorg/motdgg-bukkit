@@ -25,7 +25,7 @@
 
 ## Plugin features
 
-**Edit your current motd via motd.gg**
+**Edit your current MOTD via motd.gg**
 
 <img src="img/open-editor.gif" alt="Logo" width="500">
 
@@ -34,6 +34,6 @@
 <img src="img/apply-changes.gif" alt="Logo" width="500">
 
 
-**The motd changes instantly without a server restart**
+**The MOTD changes instantly without a server restart**
 
 <img src="img/apply-instant.gif" alt="Logo" width="500">
