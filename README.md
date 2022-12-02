@@ -7,21 +7,21 @@
   <h3 align="center">Server plugin</h3>
 
   <p align="center">
-    Quickly upload your current MOTD and server icon to <a href="https://motd.gg">motd.gg</a> to edit or share them.
+    Quickly upload your current MOTD and server icon to <a href="https://motd.gg" target="_blank">motd.gg</a> to edit or share them.
     <br />
-    <a href="https://modrinth.com/plugin/motdgg"><strong>Download on modrinth »</strong></a>
+    <a href="https://modrinth.com/plugin/motdgg" target="_blank"><strong>Download on modrinth »</strong></a>
     <br />
     <br />
-    <a href="https://www.spigotmc.org/resources/motd-gg.106501">Spigot</a>
+    <a href="https://www.spigotmc.org/resources/motd-gg.106501" target="_blank">Spigot</a>
     ·
-    <a href="https://www.curseforge.com/minecraft/bukkit-plugins/motd-gg">Curseforge</a>
+    <a href="https://www.curseforge.com/minecraft/bukkit-plugins/motd-gg" target="_blank">Curseforge</a>
   </p>
 </div>
 
 
 ## About motd.gg
 
-<a href="https://motd.gg">motd.gg</a> allows you to quickly and intuitively create a MOTD for your Minecraft Java server. Features like our in-game preview allow you to see your newly created MOTD directly in your Minecraft server list, so you can always create the best MOTD for you and your players.
+<a href="https://motd.gg" target="_blank">motd.gg</a> allows you to quickly and intuitively create a MOTD for your Minecraft Java server. Features like our in-game preview allow you to see your newly created MOTD directly in your Minecraft server list, so you can always create the best MOTD for you and your players.
 
 ## Plugin features
 
