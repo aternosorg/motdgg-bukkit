@@ -6,6 +6,7 @@ website: https://motd.gg
 
 main: gg.motd.bukkit.MOTDGGPlugin
 api-version: 1.13
+folia-supported: true
 
 commands:
   motdgg:
