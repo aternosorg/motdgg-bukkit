@@ -2,14 +2,13 @@ package gg.motd.bukkit;
 
 import gg.motd.api.MOTD;
 import gg.motd.api.SaveResponse;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -49,35 +48,31 @@ public class MOTDEditorCommand implements CommandExecutor {
             parent.plugin.motd = response.getMotd();
             success = response.isSuccess();
         } catch (IOException e) {
-            sender.sendMessage(ChatColor.RED + "Failed to save the MOTD to the motd.gg API. Check your log for details.");
+            parent.plugin.adventure().sender(sender).sendMessage(Component
+                    .text("Failed to save the MOTD to the motd.gg API. Check your log for details.")
+                    .color(NamedTextColor.RED)
+            );
             parent.plugin.getLogger().log(Level.SEVERE, "Failed to save the MOTD to the motd.gg API: ", e);
             return true;
         }
 
         if (!success || parent.plugin.motd == null) {
-            sender.sendMessage(ChatColor.RED + "Failed to save the MOTD to the motd.gg API.");
+            parent.plugin.adventure().sender(sender).sendMessage(Component
+                    .text("Failed to save the MOTD to the motd.gg API.")
+                    .color(NamedTextColor.RED)
+            );
             parent.log(Level.SEVERE, "Failed to save the MOTD to the motd.gg API.");
             return true;
         }
 
-        if (sender instanceof ConsoleCommandSender || !parent.plugin.hasSpigotMethod()) {
-            sender.sendMessage(ChatColor.GREEN + "Edit your MOTD here: " + ChatColor.AQUA +
-                    parent.plugin.motd.getSessionUrL());
-        }
-        else {
-            TextComponent message = new TextComponent();
-            message.setText("Edit your MOTD here: ");
-            message.setColor(ChatColor.GREEN.asBungee());
-
-            TextComponent link = new TextComponent();
-            link.setColor(ChatColor.AQUA.asBungee());
-            link.setText(parent.plugin.motd.getUrl());
-            link.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, parent.plugin.motd.getSessionUrL()));
-            message.addExtra(link);
-
-            sender.spigot().sendMessage(message);
-        }
-
+        Component message = Component.empty();
+        message = message.append(Component.text("Edit your MOTD here: "));
+        message = message.append(Component
+                        .text(parent.plugin.motd.getUrl())
+                        .color(NamedTextColor.AQUA)
+                        .clickEvent(ClickEvent.openUrl(parent.plugin.motd.getSessionUrL()))
+        );
+        parent.plugin.adventure().sender(sender).sendMessage(message);
         return true;
     }
 }

@@ -2,11 +2,11 @@ package gg.motd.bukkit;
 
 import gg.motd.api.APIClient;
 import gg.motd.api.MOTD;
-import org.bukkit.command.CommandSender;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.CachedServerIcon;
+import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Method;
 import java.util.Objects;
 
 public class MOTDGGPlugin extends JavaPlugin {
@@ -17,27 +17,39 @@ public class MOTDGGPlugin extends JavaPlugin {
 
     protected MOTD motd = null;
 
+    protected BukkitAudiences adventure;
+
     @Override
     public void onEnable() {
         Objects.requireNonNull(this.getCommand("motdgg"))
                 .setExecutor(new MOTDCommand(this));
 
         String pluginVersion = this.getDescription().getVersion();
-        client = new APIClient("motdgg-bukkit/" + pluginVersion + "/" + this.getServer().getVersion());
+        this.client = new APIClient("motdgg-bukkit/" + pluginVersion + "/" + this.getServer().getVersion());
+        this.adventure = BukkitAudiences.create(this);
         getServer().getPluginManager().registerEvents(new ServerListPingEventHandler(this), this);
+    }
+
+    @Override
+    public void onDisable() {
+        if (this.adventure != null) {
+            this.adventure.close();
+            this.adventure = null;
+        }
+        this.client = null;
     }
 
     public APIClient getClient() {
         return client;
     }
 
-    public boolean hasSpigotMethod() {
-        Class<CommandSender> sender = CommandSender.class;
-        try {
-            Method spigot = sender.getMethod("spigot");
-            return true;
-        } catch (NoSuchMethodException e) {
-            return false;
+    /**
+     * @return get the adventure adapter
+     */
+    public @NotNull BukkitAudiences adventure() {
+        if (this.adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
         }
+        return this.adventure;
     }
 }

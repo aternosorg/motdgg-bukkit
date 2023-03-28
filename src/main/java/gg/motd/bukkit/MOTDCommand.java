@@ -1,6 +1,7 @@
 package gg.motd.bukkit;
 
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -32,7 +33,10 @@ public class MOTDCommand implements CommandExecutor, TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
         if (!sender.hasPermission("motdgg")) {
-            sender.sendMessage(ChatColor.RED + "You don't have the permissions required to execute this command.");
+            plugin.adventure().sender(sender).sendMessage(Component
+                    .text("You don't have the permissions required to execute this command.")
+                    .color(NamedTextColor.RED)
+            );
             return true;
         }
 

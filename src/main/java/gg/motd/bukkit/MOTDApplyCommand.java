@@ -1,6 +1,8 @@
 package gg.motd.bukkit;
 
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -39,19 +41,34 @@ public class MOTDApplyCommand implements CommandExecutor {
             Matcher matcher = Pattern.compile("(?:https?://motd\\.gg/)?([a-zA-Z0-9]+)(?:\\..*)?")
                     .matcher(args[0]);
             if (!matcher.matches()) {
-                sender.sendMessage(ChatColor.RED + "No motd id specified. Use /motdgg apply <url|id>");
+                parent.plugin.adventure().sender(sender).sendMessage(Component
+                        .text("No MOTD id specified. Use /motdgg apply <url|id>")
+                        .color(NamedTextColor.RED)
+                );
                 return true;
             }
 
             id = matcher.group(1);
         }
 
+        parent.plugin.adventure().sender(sender).sendMessage(Component.empty()
+                .append(Component.text("Applying MOTD "))
+                .append(Component
+                        .text("https://motd.gg/" + id)
+                        .color(NamedTextColor.AQUA)
+                        .clickEvent(ClickEvent.openUrl("https://motd.gg/" + id))
+                )
+        );
+
         try {
             // set live MOTD
             parent.plugin.motd = parent.getPlugin().getClient().getMotd(id);
             parent.plugin.motd.setSession(session);
         } catch (IOException e) {
-            sender.sendMessage(ChatColor.RED + "Failed to fetch the MOTD from the motd.gg API. Check your log for details.");
+            parent.plugin.adventure().sender(sender).sendMessage(Component
+                    .text("Failed to fetch the MOTD from the motd.gg API. Check your log for details.")
+                    .color(NamedTextColor.RED)
+            );
             parent.plugin.getLogger().log(Level.SEVERE, "Failed to fetch the MOTD from the motd.gg API: ", e);
             return true;
         }
@@ -64,10 +81,12 @@ public class MOTDApplyCommand implements CommandExecutor {
             properties.load(Files.newInputStream(propertiesPath));
             properties.setProperty("motd", parent.plugin.motd.getText());
             properties.store(Files.newOutputStream(propertiesPath), null);
-            sender.sendMessage(ChatColor.GREEN + "Saved new MOTD in the server.properties.");
         }
         catch (IOException e) {
-            sender.sendMessage(ChatColor.RED + "Failed to write server.properties. Check your log for details.");
+            parent.plugin.adventure().sender(sender).sendMessage(Component
+                    .text("Failed to write server.properties. Check your log for details.")
+                    .color(NamedTextColor.RED)
+            );
             parent.plugin.getLogger().log(Level.SEVERE, "Failed to write server.properties: ", e);
             success = false;
         }
@@ -83,27 +102,35 @@ public class MOTDApplyCommand implements CommandExecutor {
 
                 // write the image to a file
                 ImageIO.write(image, "png", new File("server-icon.png"));
-                sender.sendMessage(ChatColor.GREEN + "Wrote new server icon to server-icon.png.");
 
                 // set live server icon
                 try {
                     parent.plugin.icon = sender.getServer().loadServerIcon(new File("server-icon.png"));
-                    sender.sendMessage(ChatColor.GREEN + "Applied new server icon.");
                 }
                 catch (Exception e) {
-                    sender.sendMessage(ChatColor.RED + "Failed to load server icon. You will have to restart your server to apply the change. Check your log for details.");
+                    parent.plugin.adventure().sender(sender).sendMessage(Component
+                            .text("Failed to load server icon. You will have to restart your server to apply the change. " +
+                                    "Check your log for details.")
+                            .color(NamedTextColor.RED)
+                    );
                     parent.plugin.getLogger().log(Level.SEVERE, "Failed to load server icon: ", e);
                     success = false;
                 }
             } catch (IOException e) {
-                sender.sendMessage(ChatColor.RED + "Failed to write server-icon.png. Check your log for details.");
+                parent.plugin.adventure().sender(sender).sendMessage(Component
+                        .text("Failed to write server-icon.png. Check your log for details.")
+                        .color(NamedTextColor.RED)
+                );
                 parent.plugin.getLogger().log(Level.SEVERE, "Failed to write server-icon.png: ", e);
                 success = false;
             }
         }
 
         if (success) {
-            sender.sendMessage(ChatColor.GREEN + "Applied new MOTD and server icon.");
+            parent.plugin.adventure().sender(sender).sendMessage(Component
+                    .text("Applied new MOTD and server icon.")
+                    .color(NamedTextColor.GREEN)
+            );
         }
 
         return true;

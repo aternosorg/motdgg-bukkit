@@ -1,2 +1,2 @@
-- The session id is no long shown in chat for non-console senders on 1.13+
-- Only show a single confirmation message
+- Move to adventure for message formatting
+- Send fewer messages when applying the motd
