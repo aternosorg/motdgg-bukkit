@@ -45,6 +45,8 @@ modrinth {
     projectId = "VPo0otUH"
     uploadFile = "./build/libs/motdgg-bukkit-${project.version}.jar"
     gameVersions = [
+            "1.19.4",
+            "1.19.3",
             "1.19.2",
             "1.19.1",
             "1.19",
