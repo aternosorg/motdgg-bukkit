@@ -20,7 +20,7 @@ jobs:
                   calculatedSha=$(git rev-parse --short ${{ github.sha }})
                   echo "::set-output name=short_sha::$calculatedSha"
             - name: Build with Gradle
-              run: ./gradlew build -Prelease=dev-${{ steps.vars.outputs.short_sha }}
+              run: ./gradlew shadowJar -Prelease=dev-${{ steps.vars.outputs.short_sha }}
             - uses: actions/upload-artifact@v3
               with:
                   name: motdgg-bukkit-dev-${{ steps.vars.outputs.short_sha }}
