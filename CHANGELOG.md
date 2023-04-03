@@ -1,3 +1,1 @@
-- Move to adventure for message formatting
-- Send fewer messages when applying the motd
-- Enable folia support
+- Fix dependency error
