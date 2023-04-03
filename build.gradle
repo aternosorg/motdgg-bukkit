@@ -43,7 +43,7 @@ shadowJar {
 modrinth {
     token = System.getenv("MODRINTH_TOKEN")
     projectId = "VPo0otUH"
-    uploadFile = "motdgg-bukkit-${project.version}.jar"
+    uploadFile = shadowJar
     gameVersions = [
             "1.19.4",
             "1.19.3",
