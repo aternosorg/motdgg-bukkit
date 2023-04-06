@@ -15,6 +15,8 @@
     <a href="https://www.spigotmc.org/resources/motd-gg.106501" target="_blank">SpigotMC</a>
     ·
     <a href="https://www.curseforge.com/minecraft/bukkit-plugins/motd-gg" target="_blank">CurseForge</a>
+    ·
+    <a href="https://hangar.papermc.io/Aternos/motdgg" target="_blank">Hangar</a>
   </p>
 </div>
 
